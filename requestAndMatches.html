@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsPal</title>
+    <link rel="icon" type="image/png" href="/public_img/faviconImage/favicon.png">
+    <link rel="stylesheet" href="/public_css/style.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f9f9f9;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        /* Styles for the request button */
+        .request-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .request-btn:hover {
+            background-color: #45a049;
+        }
+
+        .request-sent {
+            background-color: #ccc;
+            pointer-events: none; /* Disable clicking on already sent requests */
+        }
+    </style>
+    </head>
+    <body>
+        <header class="header">
+            <a href="nav.php?page=home"> <img class="img_allign" src="/public_img/logo.png" width="55" height="50"></a>
+            <nav class="navbar">
+              <a href="nav.php?page=home">Home</a>
+              <a href="nav.php?page=activity">Activity</a>
+              <a href="nav.php?page=profile">Profile</a>
+              <a href="nav.php?page=matches">Matches</a>
+              <a href="nav.php?page=history">History</a>
+              <a href="nav.php?page=index">Sign out</a>
+            </nav>
+            </header>
+    
+        <div class="container">
+            <br>
+            <br>
+            <h1>Best Matches</h1>
+            <table id="match-list">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Match Date</th>
+                        <th>Common Interests</th>
+                        <th>Common Goals</th>
+                        <th>Location</th>
+                        <th>Timespan</th>
+                        <th>Activity</th>
+                        <th>Match Percentage</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Match items will be added here dynamically -->
+                </tbody>
+            </table>
+    <br>
+            <h2>Incoming Requests</h2>
+            <table id="request-list">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Match Date</th>
+                        <th>Common Interests</th>
+                        <th>Common Goals</th>
+                        <th>Location</th>
+                        <th>Timespan</th>
+                        <th>Activity</th>
+                        <th>Match Percentage</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Incoming request items will be added here dynamically -->
+                </tbody>
+            </table>
+        </div>
+
+        <script src="check.js"></script>
+        <script src="ScoringSystem.js"></script>
+        <script>
+            // Fetch data using JavaScript and PHP
+            window.onload = function() {
+                var matchXhr = new XMLHttpRequest();
+                matchXhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var matches = JSON.parse(this.responseText);
+                        displayMatches(matches);
+                    }
+                };
+                matchXhr.open("GET", "fetch_top_matches.php", true);
+                matchXhr.send();
+
+                var requestXhr = new XMLHttpRequest();
+                requestXhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        var requests = JSON.parse(this.responseText);
+                        displayRequests(requests);
+                    }
+                };
+                requestXhr.open("GET", "fetch_incoming_requests.php", true);
+                requestXhr.send();
+            };
+
+            // Display matches
+            function displayMatches(matches) {
+                var matchList = document.querySelector("#match-list tbody");
+                matches.forEach(function(match) {
+                    var row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${match.user2}</td>
+                        <td>${match.match_date}</td>
+                        <td>${match.common_interests}</td>
+                        <td>${match.common_goals}</td>
+                        <td>${match.location}</td>
+                        <td>${match.timespan}</td>
+                        <td>${match.activity}</td>
+                        <td>${match.match_percentage}%</td>
+                        <td><button class="request-btn" onclick="sendRequest(this, '${match.user2}')">${match.request_status}</button></td>
+                    `;
+                    if (match.request_status === 'Request Sent') {
+                        row.querySelector('.request-btn').classList.add('request-sent');
+                    }
+                    matchList.appendChild(row);
+                });
+            }
+
+            // Display incoming requests
+            function displayRequests(requests) {
+                var requestList = document.querySelector("#request-list tbody");
+                requests.forEach(function(request) {
+                    var row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${request.user_id_requester}</td>
+                        <td>${request.date}</td>
+                        <td>${request.common_interests}</td>
+                        <td>${request.common_goals}</td>
+                        <td>${request.location}</td>
+                        <td>${request.timespan}</td>
+                        <td>${request.activities}</td>
+                        <td>${request.match_percentage}%</td>
+                        <td><button class="request-btn" onclick="sendRequest(this, '${request.request_id}', 'accept')">Accept</button><button class="request-btn" onclick="sendRequest(this, '${request.request_id}', 'reject')">Reject</button></td>
+                    `;
+                    requestList.appendChild(row);
+                });
+            }
+
+            function sendRequest(button, requestId, action) {
+                if (action === 'reject') {
+                    deleteRequest(requestId, button.parentNode.parentNode);}
+                else if (action === 'accept') {
+                    acceptRequest(requestId, button.parentNode.parentNode);
+                } else {
+                    button.innerText = "Request Sent";
+                    button.classList.add("request-sent");
+                    // Send AJAX request to insert the request into the database
+                    var xhr = new XMLHttpRequest();
+                    xhr.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            console.log(this.responseText); // Display response from server (optional)
+                        }
+                    };
+                    xhr.open("POST", "send_request.php", true);
+                    xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                    xhr.send("recipient_id=" + requestId);
+                }
+            }
+
+            // Function to delete request
+            function deleteRequest(requestId, row) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText); // Display response from server (optional)
+                        row.parentNode.removeChild(row);
+                    }
+                };
+                xhr.open("POST", "delete_request.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.send("request_id=" + requestId);
+            }
+
+            // Function to accept request
+            function acceptRequest(requestId, row) {
+                var xhr = new XMLHttpRequest();
+                xhr.onreadystatechange = function() {
+                    if (this.readyState == 4 && this.status == 200) {
+                        console.log(this.responseText); // Display response from server (optional)
+                        row.parentNode.removeChild(row);
+                    }
+                };
+                xhr.open("POST", "accept_request.php", true);
+                xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhr.send("request_id=" + requestId);
+            }
+        </script>
+    </body>
+</html>

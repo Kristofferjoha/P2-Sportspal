@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SportsPal</title>
+    <link rel="icon" type="image/png" href="/public_img/faviconImage/favicon.png">
+    <link rel="stylesheet" href="/public_css/style.css">
+    <link rel="stylesheet" href="/public_css/styl.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Your custom styles here */
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="nav.php?page=home"> <img class="img_allign" src="/public_img/logo.png" width="55" height="50"></a>
+        <nav class="navbar">
+          <a href="nav.php?page=home">Home</a>
+          <a href="nav.php?page=activity">Activity</a>
+          <a href="nav.php?page=profile">Profile</a>
+          <a href="nav.php?page=matches">Matches</a>
+          <a href="nav.php?page=history">History</a>
+          <a href="nav.php?page=index">Sign out</a>
+        </nav>
+        </header>
+
+
+    <div class="container">
+        <br>
+        <h1>Match History</h1>
+        <br>
+        <div id="match-info"></div>
+    </div>
+
+    <script src="check.js"></script>
+    <script>
+    // Function to load match details
+    function loadMatchDetails() {
+        var xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("match-info").innerHTML = this.responseText;
+            }
+        };
+        xhr.open("GET", "display_matches.php", true);
+        xhr.send();
+    }
+
+    // Load match details when the page is loaded
+    window.addEventListener("load", loadMatchDetails);
+    </script>
+</body>
+</html>

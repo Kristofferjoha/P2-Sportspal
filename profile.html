@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SportsPal</title>
+    <link rel="icon" type="image/png" href="/public_img/faviconImage/favicon.png">
+    <link rel="stylesheet" href="./public_css/style.css">
+    <link rel="stylesheet" href="./public_css/profile.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <a href="nav.php?page=home"> <img class="img_allign" src="/public_img/logo.png" width="55" height="50"></a>
+        <nav class="navbar">
+          <a href="nav.php?page=home">Home</a>
+          <a href="nav.php?page=activity">Activity</a>
+          <a href="nav.php?page=profile">Profile</a>
+          <a href="nav.php?page=matches">Matches</a>
+          <a href="nav.php?page=history">History</a>
+          <a href="nav.php?page=index">Sign out</a>
+        </nav>
+    </header>
+
+    <div class="wrapper-profile">
+        <h2 class="profile-title">My Profile</h2>
+        <form id="settings-form" action="profile.php" method="post">
+            <div class="group-variants">
+                <div class="group-variant">
+
+                    <h3 class="variant-title">FULL NAME</h3>
+                    <input type="text" class="input" name="name" value="">
+                    <h3 class="variant-title">AGE</h3>
+                    <input type="number" class="input" value="" name="ageInput" min="18" max="99">
+                    <h3 class="variant-title">PHONE NUMBER</h3>
+                    <input type="text" class="input" name="phoneInput" value="">
+                    <h3 class="variant-title">GENDER</h3>
+                    <select name="genderInput" class="gender-select">
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                    <h3 class="variant-title">EXPERIENCE LEVEL</h3>
+                    <select name="experienceInput" class="gender-select">
+                      <option value="beginner">Beginner</option>
+                      <option value="intermediate">Intermediate</option>
+                      <option value="advanced">Advanced</option>
+                    </select>
+
+                    <h3 class="variant-title">GOALS</h3>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="goals[]" value="diseaserisk"> Decrease Chronic Disease Risk</label>
+                        <label><input type="checkbox" name="goals[]" value="loseweight"> Lose weight</label>
+                        <label><input type="checkbox" name="goals[]" value="maintainweight"> Maintain Weight</label>
+                        <label><input type="checkbox" name="goals[]" value="musclegain"> Muscle Gain</label>
+                        <label><input type="checkbox" name="goals[]" value="stressrelief"> Stress Relief</label>
+                        <label><input type="checkbox" name="goals[]" value="mentalhealth"> Increase Mental Health</label>
+                        <label><input type="checkbox" name="goals[]" value="energylevels"> Increase Energy Levels</label>
+                        <label><input type="checkbox" name="goals[]" value="wellbeing"> Increase Well Being</label>
+                        <label><input type="checkbox" name="goals[]" value="confidence"> Increase self-confidence</label>
+                    </div>
+
+                    <h3 class="variant-title">INTERESTS</h3>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="interests[]" value="running"> Running</label>
+                        <label><input type="checkbox" name="interests[]" value="cycling"> Cycling</label>
+                        <label><input type="checkbox" name="interests[]" value="swimming"> Swimming</label>
+                        <label><input type="checkbox" name="interests[]" value="fitness"> Fitness</label>
+                        <label><input type="checkbox" name="interests[]" value="golf"> Golf</label>
+                        <label><input type="checkbox" name="interests[]" value="yoga"> Yoga</label>
+                        <label><input type="checkbox" name="interests[]" value="badminton"> Badminton</label>
+                        <label><input type="checkbox" name="interests[]" value="tennis"> Tennis</label>
+                        <label><input type="checkbox" name="interests[]" value="football"> Football</label>
+                        <label><input type="checkbox" name="interests[]" value="handball"> Handball</label>
+                        <label><input type="checkbox" name="interests[]" value="hiking"> Hiking</label>
+                        <label><input type="checkbox" name="interests[]" value="bouldering"> Bouldering</label>
+                        <h3 class="variant-title">HOBBIES</h3>
+                        <label><input type="checkbox" name="interests[]" value="reading"> Reading</label>
+                        <label><input type="checkbox" name="interests[]" value="cooking"> Cooking</label>
+                        <label><input type="checkbox" name="interests[]" value="painting"> Painting</label>
+                        <label><input type="checkbox" name="interests[]" value="gardening"> Gardening</label>
+                        <label><input type="checkbox" name="interests[]" value="knitting"> Knitting</label>
+                        <label><input type="checkbox" name="interests[]" value="photography"> Photography</label>
+                        <label><input type="checkbox" name="interests[]" value="writing"> Writing</label>
+                        <label><input type="checkbox" name="interests[]" value="singing"> Singing</label>
+                        <label><input type="checkbox" name="interests[]" value="instruments"> Instruments</label>
+                        <label><input type="checkbox" name="interests[]" value="video games"> Video Games</label>
+                        <h3 class="variant-title">MUSIC</h3>
+                        <label><input type="checkbox" name="interests[]" value="pop"> Pop</label>
+                        <label><input type="checkbox" name="interests[]" value="rock"> Rock</label>
+                        <label><input type="checkbox" name="interests[]" value="hiphop"> Hip Hop</label>
+                        <label><input type="checkbox" name="interests[]" value="rap"> Rap</label>
+                        <label><input type="checkbox" name="interests[]" value="jazz"> Jazz</label>
+                        <label><input type="checkbox" name="interests[]" value="classical"> Classical</label>
+                        <label><input type="checkbox" name="interests[]" value="country"> Country</label>
+                        <label><input type="checkbox" name="interests[]" value="metal"> Metal</label>
+                        <label><input type="checkbox" name="interests[]" value="blues"> Blues</label>
+                        <label><input type="checkbox" name="interests[]" value="techno"> Techno</label>
+                        <label><input type="checkbox" name="interests[]" value="house"> House</label>
+                        <h3 class="variant-title">MOVIES</h3>
+                        <label><input type="checkbox" name="interests[]" value="action"> Action</label>
+                        <label><input type="checkbox" name="interests[]" value="comedy"> Comedy</label>
+                        <label><input type="checkbox" name="interests[]" value="drama"> Drama</label>
+                        <label><input type="checkbox" name="interests[]" value="horror"> Horror</label>
+                        <label><input type="checkbox" name="interests[]" value="romance"> Romance</label>
+                        <label><input type="checkbox" name="interests[]" value="thriller"> Thriller</label>
+                        <label><input type="checkbox" name="interests[]" value="sci-fi"> Sci-Fi</label>
+                        <label><input type="checkbox" name="interests[]" value="fantasy"> Fantasy</label>
+                        <label><input type="checkbox" name="interests[]" value="documentary"> Documentary</label>
+                        <label><input type="checkbox" name="interests[]" value="animation"> Animation</label>
+                    </div>
+                </div>
+            </div>
+            <div>
+              <button type="submit" id="btn-save" class="btn-save">SAVE SETTINGS</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="./public_js/profile.js"></script>
+
+</body>
+</html>
